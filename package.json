@@ -1,0 +1,19 @@
+{
+  "name": "friendfinder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StacieM/FriendFinder.git"
+  },
+  "author": "Stacie Meierhoefer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/StacieM/FriendFinder/issues"
+  },
+  "homepage": "https://github.com/StacieM/FriendFinder#readme"
+}
