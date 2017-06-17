@@ -12,6 +12,31 @@ module.exports = function(app){
 	// API POST Request to handle incoming survey results & logic
 	app.post('/api/friends', function(req, res){
 
-        // add logic here......
-    }
+
+	app.get("/api/survey", function (req, res) {
+    res.json(friendsArray);
 });
+        // add logic here......
+    });
+}
+
+
+
+
+// app.post("/survey", function (req, res) {
+//     // req.body hosts is equal to the JSON post sent from the user
+//     if (reservations.length >= 5) {
+//         waitList.push(req.body);
+//         // res.send(alert("Sorry you are on the waitlist!"));
+//     } else {
+//         reservations.push(req.body);
+//         // res.send(alert("You are offically booked!"));
+//     }
+// });
+
+
+
+
+// app.get("/api/waitlist", function (req, res) {
+//     res.json(waitList);
+// });
