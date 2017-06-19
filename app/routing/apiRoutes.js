@@ -1,42 +1,44 @@
-//require the friends data file
-var friends = require('../data/friends.js');
+//a POST routes /api/friends - this handles incoming survey results. will also used to handle the compatibility logic
+//Load Data
+var friendList = require('../data/friends.js');
 
-//Routes
 module.exports = function(app){
+  //a GET route that displays JSON of all possible friends
+  app.get('/api/friends', function(req,res){
+    res.json(friendList);
+  });
 
-	// API GET route/request to display JSON of friends
-	app.get('/api/friends', function(req, res){
-		res.json(friends);
-	});
+  app.post('/api/friends', function(req,res){
+    //grabs the new friend's scores to compare with friends in friendList array
+    var newFriendScores = req.body.scores;
+    var scoresArray = [];
+    var friendCount = 0;
+    var bestMatch = 0;
 
-	// API POST Request to handle incoming survey results & logic
-	app.post('/api/friends', function(req, res){
+    //runs through all current friends in list
+    for(var i=0; i<friendList.length; i++){
+      var scoresDiff = 0;
+      //run through scores to compare friends
+      for(var j=0; j<newFriendScores.length; j++){
+        scoresDiff += (Math.abs(parseInt(friendList[i].scores[j]) - parseInt(newFriendScores[j])));
+      }
 
+      //push results into scoresArray
+      scoresArray.push(scoresDiff);
+    }
 
-	app.get("/api/survey", function (req, res) {
-    res.json(friendsArray);
-});
-        // add logic here......
-    });
-}
+    //after all friends are compared, find best match
+    for(var i=0; i<scoresArray.length; i++){
+      if(scoresArray[i] <= scoresArray[bestMatch]){
+        bestMatch = i;
+      }
+    }
 
+    //return bestMatch data
+    var bff = friendList[bestMatch];
+    res.json(bff);
 
-
-
-// app.post("/survey", function (req, res) {
-//     // req.body hosts is equal to the JSON post sent from the user
-//     if (reservations.length >= 5) {
-//         waitList.push(req.body);
-//         // res.send(alert("Sorry you are on the waitlist!"));
-//     } else {
-//         reservations.push(req.body);
-//         // res.send(alert("You are offically booked!"));
-//     }
-// });
-
-
-
-
-// app.get("/api/waitlist", function (req, res) {
-//     res.json(waitList);
-// });
+    //pushes new submission into the friendsList array
+    friendList.push(req.body);
+  });
+};
